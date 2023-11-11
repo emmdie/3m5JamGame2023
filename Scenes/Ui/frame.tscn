@@ -45,13 +45,13 @@ offset_bottom = 192.0
 texture = ExtResource("2_h4e8m")
 
 [node name="eyes_happy" type="TextureRect" parent="frog"]
-visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("3_sarvi")
 
 [node name="eyes_dead" type="TextureRect" parent="frog"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
