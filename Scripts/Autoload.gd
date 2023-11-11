@@ -1,5 +1,5 @@
 extends Node
-
+const level = "res://Scenes/Dungeon/DungeonRoom_New.tscn"
 const CELLSIZE := 64
 
 enum CELLFILLERS {enemy, item, player, free}
