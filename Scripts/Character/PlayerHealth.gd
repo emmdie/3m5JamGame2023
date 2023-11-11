@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready
-var max_health = PlayerStats.MAXHEALTH
+var max_health = PlayerStats.max_health
 var current_health
 
 # Called when the node enters the scene tree for the first time.
