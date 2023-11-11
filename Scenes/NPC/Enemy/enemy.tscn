@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgprrf6gn5xmf"]
+[gd_scene load_steps=5 format=3 uid="uid://bgprrf6gn5xmf"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/EnemyMovement.gd" id="1_e6amd"]
+[ext_resource type="Script" path="res://Scenes/NPC/Enemy/Enemy.gd" id="1_jghrp"]
 [ext_resource type="Texture2D" uid="uid://dppcge5ln460m" path="res://icon.svg" id="1_odrdn"]
+[ext_resource type="Script" path="res://Scenes/NPC/Enemy/Attack.gd" id="4_3mj8n"]
 
 [node name="Enemy" type="Node2D"]
+script = ExtResource("1_jghrp")
 
 [node name="Movement" type="Node2D" parent="."]
 script = ExtResource("1_e6amd")
@@ -11,3 +14,6 @@ script = ExtResource("1_e6amd")
 [node name="Sprite2D" type="Sprite2D" parent="Movement"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_odrdn")
+
+[node name="Attack" type="Node2D" parent="."]
+script = ExtResource("4_3mj8n")

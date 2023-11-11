@@ -1,15 +1,14 @@
 extends Node2D
 class_name Platform
-
-@export
-var tile_size : Vector2 
 @export
 var direction : Vector2 
 @export
-var countdown : int
+var countdown := 60
 @export
-var step_limit : int
+var step_limit := 2
 
+
+var tile_size := Autoload.CELLSIZE
 var step_counter : int
 var timer : int
 
@@ -34,8 +33,8 @@ func _process(delta):
 	pass
 
 func _move():
-	position.x = position.x + direction.x * tile_size.x
-	position.y = position.y + direction.y * tile_size.y
+	position.x = position.x + direction.x * tile_size
+	position.y = position.y + direction.y * tile_size
 	
 
 func _change_direction():
