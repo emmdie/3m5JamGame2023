@@ -7,6 +7,7 @@ var timer
 var a_star
 
 var current_pos_id
+var current_pos_coords
 var path
 var path_index = 0
 var destination_id
@@ -20,13 +21,14 @@ func _ready():
 	pass # Replace with function body.
 
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	timer -= delta
-	if(timer <= 0):
-		move()
-		timer = countdown
-	pass
+#func _process(delta):
+#	timer -= delta
+#	if(timer <= 0):
+#		move()
+#		timer = countdown
+#	pass
 
 func prepare_Tilemap_for_astar():
 	a_star = AStar2D.new()
@@ -48,6 +50,7 @@ func spawn_on_tilemap():
 	var start_pos = a_star.get_point_position(point_id)
 	position = to_global(tile_map.map_to_local(start_pos))
 	current_pos_id = point_id
+	current_pos_coords = start_pos
 
 
 
@@ -70,3 +73,6 @@ func random_destination():
 	if(path.is_empty()):
 		random_destination()
 	print(path)
+
+#func check_for_player():
+	
