@@ -1,4 +1,8 @@
-[gd_scene format=3 uid="uid://dutduaykmyos1"]
+[gd_scene load_steps=4 format=3 uid="uid://dutduaykmyos1"]
+
+[ext_resource type="Script" path="res://Scenes/Ui/TitleScreen.gd" id="1_jmr71"]
+[ext_resource type="Texture2D" uid="uid://dme6uu4quu2ip" path="res://Assets/Art/UI/TitleScreen.png" id="1_n2f8l"]
+[ext_resource type="Theme" uid="uid://bc1cfh5md60wd" path="res://Assets/game_theme.tres" id="2_587pk"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -7,18 +11,56 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jmr71")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_n2f8l")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 279.0
+offset_bottom = 223.0
+theme = ExtResource("2_587pk")
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 80
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme = ExtResource("2_587pk")
+theme_override_constants/separation = 41
 
-[node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="TitelText" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("2_587pk")
+theme_override_font_sizes/normal_font_size = 100
+text = "Unser Cooler Game Titel
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="PlayButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_587pk")
 text = "Play"
+
+[node name="AboutButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_587pk")
+text = "About"
+
+[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_587pk")
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/AboutButton" to="." method="_on_about_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
