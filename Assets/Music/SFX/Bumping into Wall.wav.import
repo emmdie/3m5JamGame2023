@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d2aoa16hfwau1"
+path="res://.godot/imported/Bumping into Wall.wav-cddd1a5a8293f57402dcc4a607716355.sample"
+
+[deps]
+
+source_file="res://Assets/Music/SFX/Bumping into Wall.wav"
+dest_files=["res://.godot/imported/Bumping into Wall.wav-cddd1a5a8293f57402dcc4a607716355.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
