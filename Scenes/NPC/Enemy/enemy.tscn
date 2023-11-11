@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgprrf6gn5xmf"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/EnemyMovement.gd" id="1_e6amd"]
+[ext_resource type="Texture2D" uid="uid://dppcge5ln460m" path="res://icon.svg" id="1_odrdn"]
+
+[node name="Enemy" type="Node2D"]
+
+[node name="Movement" type="Node2D" parent="."]
+script = ExtResource("1_e6amd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Movement"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_odrdn")
