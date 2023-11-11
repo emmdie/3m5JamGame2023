@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://hgpl2skgfmis"]
+
+[ext_resource type="Texture2D" uid="uid://4nhimwmrg1n8" path="res://Assets/Art/UI/HealthBar/under.png" id="1_i5yrc"]
+[ext_resource type="Texture2D" uid="uid://0aewsnn6s7ie" path="res://Assets/Art/UI/HealthBar/over.png" id="2_mak5y"]
+[ext_resource type="Texture2D" uid="uid://cb3fnfoaiogp6" path="res://Assets/Art/UI/HealthBar/progress.png" id="3_c4xtv"]
+
+[node name="hp_bar" type="TextureProgressBar"]
+offset_right = 768.0
+offset_bottom = 96.0
+max_value = 15.0
+value = 6.0
+texture_under = ExtResource("1_i5yrc")
+texture_over = ExtResource("2_mak5y")
+texture_progress = ExtResource("3_c4xtv")

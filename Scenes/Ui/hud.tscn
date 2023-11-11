@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://divra4xn63epr"]
+
+[ext_resource type="Script" path="res://Scenes/Ui/hud.gd" id="1_rx5rn"]
+[ext_resource type="PackedScene" uid="uid://b8fofhyseloab" path="res://Scenes/Ui/frame.tscn" id="3_2gufx"]
+[ext_resource type="PackedScene" uid="uid://hgpl2skgfmis" path="res://Scenes/Ui/hp_bar.tscn" id="3_pt5fg"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rx5rn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 772.0
+offset_bottom = 96.0
+theme_override_constants/separation = -20
+
+[node name="Portrait" parent="HBoxContainer" instance=ExtResource("3_2gufx")]
+layout_mode = 2
+
+[node name="hp_bar" parent="HBoxContainer" instance=ExtResource("3_pt5fg")]
+layout_mode = 2
