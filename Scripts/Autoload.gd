@@ -15,6 +15,14 @@ func is_cell_free(key: Vector2) -> bool:
 	else:
 		return false
 
+func print_player_pos():
+	print(get_player_pos)
+
+func get_player_pos():
+	for key in filled_cells:
+		if(filled_cells[key] == CELLFILLERS.player):
+			return key
+
 func prepare_cells(cells):
 	for cell in cells:
 		filled_cells[Vector2(cell)] = 99

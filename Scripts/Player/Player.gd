@@ -1,5 +1,6 @@
 extends Area2D
 
+signal player_turn
 @export var bump_sound = load("res://Assets/Music/SFX/Bumping into Wall.wav")
 @export var attack_sound = load("res://Assets/Music/SFX/Zunge.wav")
 
@@ -22,10 +23,14 @@ var tongue_animation_reach = 2.5
 var tongue_animation_speed =6
 
 var moving = false
+var prev_pos
 
 func _ready():
 	position = position.snapped(Vector2.ONE * tile_size)
 	position += Vector2.ONE * tile_size/2
+	#BAD MAGIC NUMBER
+	Autoload.filled_cells[Vector2(13,2)] = Autoload.CELLFILLERS.player
+	prev_pos = Vector2(13,2)
 
 #checks if the player is allowed to move
 func _unhandled_input(event):
@@ -42,14 +47,23 @@ func _unhandled_input(event):
 func move(dir):
 	walkable_ray.target_position = arrow_keys[dir] * tile_size
 	walkable_ray.force_raycast_update()
-	if walkable_ray.is_colliding():
+	if walkable_ray.is_colliding() && Autoload.filled_cells[prev_pos + inputs[dir]] != Autoload.CELLFILLERS.enemy:
+		update_cells(inputs[dir])
 		var tween = create_tween()
 		tween.finished.connect(_on_moving_tween_finished)
 		tween.tween_property(self, "position",position + arrow_keys[dir] *    tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_SINE)
 		moving = true
+		emit_signal("player_turn")
 	else :
 		audio_player.stream = bump_sound
 		audio_player.play()
+
+func update_cells(direction):
+	var new_pos = prev_pos + direction
+	Autoload.filled_cells[new_pos] = Autoload.CELLFILLERS.player
+	Autoload.filled_cells[prev_pos] = Autoload.CELLFILLERS.free
+	prev_pos = new_pos
+	
 
 #erlaubt den Spieler nach abspielen der Animation wieder zu bewegen
 func _on_moving_tween_finished():

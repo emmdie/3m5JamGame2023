@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Enemy/EnemyMovement.gd" id="1_e6amd"]
 [ext_resource type="Script" path="res://Scenes/NPC/Enemy/Enemy.gd" id="1_jghrp"]
-[ext_resource type="Texture2D" uid="uid://c0e6divnbkvko" path="res://Assets/Art/character/Ghost.png" id="3_ojxv8"]
+[ext_resource type="Texture2D" uid="uid://dppcge5ln460m" path="res://icon.svg" id="1_odrdn"]
 [ext_resource type="Script" path="res://Scenes/NPC/Enemy/Attack.gd" id="4_3mj8n"]
 
 [node name="Enemy" type="Node2D"]
@@ -12,7 +12,16 @@ script = ExtResource("1_jghrp")
 script = ExtResource("1_e6amd")
 
 [node name="Sprite2D" type="Sprite2D" parent="Movement"]
-texture = ExtResource("3_ojxv8")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_odrdn")
 
 [node name="Attack" type="Node2D" parent="."]
 script = ExtResource("4_3mj8n")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -19.0
+offset_top = -52.0
+offset_right = 21.0
+offset_bottom = -29.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "hallo"

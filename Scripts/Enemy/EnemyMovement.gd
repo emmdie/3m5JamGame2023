@@ -5,9 +5,10 @@ extends Node2D
 var countdown := 0.5
 var timer
 var a_star
+var a_star_dict := {} #for ease of access to point ids
 
 var current_pos_id
-var current_pos_coords
+var current_pos_coords : Vector2i
 var path
 var path_index = 0
 var destination_id
@@ -37,6 +38,7 @@ func prepare_Tilemap_for_astar():
 	Autoload.prepare_cells(cells)
 	for i in range(0, cells.size()):
 		a_star.add_point(i, cells[i])
+		a_star_dict[i] = cells[i]
 	for i in range(a_star.get_point_count()):
 		var main_cell = a_star.get_point_position(i)
 		var neighbor_cells = tile_map.get_surrounding_cells(main_cell)
@@ -57,12 +59,14 @@ func spawn_on_tilemap():
 
 
 
-func move():
+func move(random := true):
 	if path_index >= path.size():
 		current_pos_id = destination_id
-		path_index = 0
-		random_destination()
-	if(Autoload.filled_cells[path[path_index]] == Autoload.CELLFILLERS.enemy):
+		path_index = 1
+		if random: random_destination()
+	if(Autoload.filled_cells[path[path_index]] == Autoload.CELLFILLERS.player):
+		print("ATTACK from move")
+		path.clear()
 		return
 	var next_point = Vector2i(path[path_index])
 	
@@ -72,16 +76,30 @@ func move():
 	path_index += 1
 
 func track():
-	if(Autoload.filled_cells[track_target] == Autoload.CELLFILLERS.free):
-		var prev = tile_map.local_to_map(position)
-		position = tile_map.map_to_local(track_target)
-		update_cells(tile_map.local_to_map(position), prev)
-		keep_track()
-	if(Autoload.filled_cells[track_target] == Autoload.CELLFILLERS.enemy):
-		enemy.set_attack()
+	path.clear()
+	#Calculate DISTANCE to target
+	
+	path = a_star.get_point_path(a_star_dict.find_key(current_pos_coords),a_star_dict.find_key(track_target))
+	print(path)
+	var distance = path.size()-1  #-1 von der path size, da in dem array die current position des enemies mit drin ist, und die zähelen wir nicht mit
+	print("distance " + str(distance))
+	path_index = 1
+	if(distance <= enemy.attack_range): 
+		enemy.attack()
+	else: 
+		move(false)
+		
+	keep_track()
+#	if(Autoload.filled_cells[Vector2(track_target)] == Autoload.CELLFILLERS.free):
+#		var prev = tile_map.local_to_map(position)
+#		position = tile_map.map_to_local(track_target)
+#		update_cells(tile_map.local_to_map(position), prev)
+#		keep_track()
+#	if(Autoload.filled_cells[Vector2(track_target)] == Autoload.CELLFILLERS.player):
+#		enemy.set_attack()
 
 func keep_track():
-	check_surroundings(1)
+	check_surroundings(enemy.aggro_range)
 
 func update_cells(new_cell, freed_cell):
 	Autoload.update_cells(new_cell, Autoload.CELLFILLERS.enemy)
@@ -94,19 +112,35 @@ func random_destination():
 		random_destination()
 	
 
-func check_surroundings(range):
+func check_surroundings(range) -> bool:
 	var found = false
-	for cell in tile_map.get_surrounding_cells(current_pos_coords):
-		for key in Autoload.filled_cells:
-			if(Autoload.filled_cells[key] == Autoload.CELLFILLERS.free
-			|| Autoload.filled_cells[key] == -1):
-				continue
-			if(cell == Vector2i(key)):
-				enemy.detected(Autoload.filled_cells[key])
-				track_target = Vector2(cell)
-				found = true
-				break
-		break
-	if !found:
-		enemy.set_idle()
+	var player_pos = Autoload.get_player_pos()
+	print(player_pos)
+	var neighbor_cells = tile_map.get_surrounding_cells(current_pos_coords)
+	get_cells_in_range(range)
+	print(neighbor_cells)
+	for cell in get_cells_in_range(range):
+		if(Vector2(cell) == Autoload.get_player_pos()):
+			enemy.detect_player()
+			track_target = cell
+			found = true
+			return found
+			break
+	return found
+#			if(Autoload.filled_cells[key] >= Autoload.CELLFILLERS.free):
+#				continue
+#			if(cell == Vector2i(key)):
+#				enemy.detected(Autoload.filled_cells[key])
+#				track_target = Vector2(cell)
+#				found = true
+#				break
+#
+#	if !found:
+#		enemy.set_idle()
 
+func get_cells_in_range(range):
+	var cell_arr = []
+	for x in range(current_pos_coords.x - range, current_pos_coords.x + range+1):
+		for y in range(current_pos_coords.y - range, current_pos_coords.y + range+1):
+			cell_arr.append(Vector2i(x,y))
+	return cell_arr
