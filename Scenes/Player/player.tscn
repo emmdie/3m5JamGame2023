@@ -14,6 +14,7 @@ script = ExtResource("1_iw4r8")
 metadata/_edit_vertical_guides_ = [-192.0, 384.0]
 
 [node name="PlayerSkin" type="Sprite2D" parent="."]
+scale = Vector2(0.333, 0.333)
 texture = ExtResource("2_ihoxk")
 
 [node name="PlayerCollisionBox" type="CollisionShape2D" parent="."]
@@ -34,6 +35,7 @@ script = ExtResource("4_05ab4")
 visible = false
 position = Vector2(2, 1.19209e-07)
 rotation = -3.17475
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_k4geu")
 centered = false
 flip_v = true
