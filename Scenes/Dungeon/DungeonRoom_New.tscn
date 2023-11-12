@@ -512,3 +512,5 @@ layout_mode = 1
 [node name="Bg_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_dpsvc")
 autoplay = true
+
+[node name="Enemy2" parent="." instance=ExtResource("4_60bap")]

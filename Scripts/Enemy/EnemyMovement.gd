@@ -78,11 +78,8 @@ func move(random := true):
 func track():
 	path.clear()
 	#Calculate DISTANCE to target
-	
 	path = a_star.get_point_path(a_star_dict.find_key(current_pos_coords),a_star_dict.find_key(track_target))
-	print(path)
 	var distance = path.size()-1  #-1 von der path size, da in dem array die current position des enemies mit drin ist, und die zähelen wir nicht mit
-	print("distance " + str(distance))
 	path_index = 1
 	if(distance <= enemy.attack_range): 
 		enemy.attack()
@@ -115,10 +112,8 @@ func random_destination():
 func check_surroundings(range) -> bool:
 	var found = false
 	var player_pos = Autoload.get_player_pos()
-	print(player_pos)
 	var neighbor_cells = tile_map.get_surrounding_cells(current_pos_coords)
 	get_cells_in_range(range)
-	print(neighbor_cells)
 	for cell in get_cells_in_range(range):
 		if(Vector2(cell) == Autoload.get_player_pos()):
 			enemy.detect_player()

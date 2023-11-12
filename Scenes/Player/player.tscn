@@ -21,8 +21,6 @@ shape = SubResource("RectangleShape2D_vdxo6")
 [node name="PlayerWalkableChecker" type="RayCast2D" parent="."]
 collision_mask = 4
 
-[node name="PlayerAttackDirection" type="RayCast2D" parent="."]
-
 [node name="PlayerAnimator" type="AnimationPlayer" parent="."]
 
 [node name="Health" type="Node2D" parent="."]
