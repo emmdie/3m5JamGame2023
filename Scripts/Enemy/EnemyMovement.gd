@@ -126,7 +126,7 @@ func random_destination():
 		print("START " + str(STARTING_POSITION))
 		var distance = get_xy_distance(STARTING_POSITION, destination_id)
 		print(distance)
-		if distance[0] < MAX_RANGE_X and distance[1] < MAX_RANGE_Y:
+		if distance[0] < MAX_RANGE_X and (distance[0] != 0 or distance[1] != 0) and distance[1] < MAX_RANGE_Y:
 			break
 	
 	
