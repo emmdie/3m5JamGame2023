@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Ui/TitleScreen.gd" id="1_jmr71"]
 [ext_resource type="Texture2D" uid="uid://dme6uu4quu2ip" path="res://Assets/Art/UI/TitleScreen.png" id="1_n2f8l"]
-[ext_resource type="Theme" uid="uid://bc1cfh5md60wd" path="res://Assets/game_theme.tres" id="2_587pk"]
+[ext_resource type="Theme" path="res://Assets/game_theme.tres" id="2_587pk"]
 [ext_resource type="AudioStream" uid="uid://delcjenjf76sb" path="res://Assets/Music/düster.wav" id="4_sc07c"]
 
 [node name="TitleScreen" type="Control"]
