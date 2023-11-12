@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://ckonxdi2a227l"]
+[gd_scene load_steps=9 format=3 uid="uid://ckonxdi2a227l"]
 
 [ext_resource type="Texture2D" uid="uid://sg8h88ukqwrf" path="res://Assets/Art/Environment/Terrain.png" id="1_tkr15"]
 [ext_resource type="PackedScene" uid="uid://dcdjdw720uvxi" path="res://Scenes/Player/player.tscn" id="2_obs2u"]
 [ext_resource type="PackedScene" uid="uid://divra4xn63epr" path="res://Scenes/Ui/hud.tscn" id="3_cingh"]
 [ext_resource type="PackedScene" uid="uid://bgprrf6gn5xmf" path="res://Scenes/NPC/Enemy/enemy.tscn" id="4_60bap"]
 [ext_resource type="AudioStream" uid="uid://dbolu6qvh036" path="res://Assets/Music/dungeon.wav" id="5_dpsvc"]
+[ext_resource type="PackedScene" uid="uid://cpm1eq324ipf3" path="res://Scenes/Items/hp_pickup.tscn" id="6_ht8f1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_03c56"]
 texture = ExtResource("1_tkr15")
@@ -512,3 +513,11 @@ layout_mode = 1
 [node name="Bg_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_dpsvc")
 autoplay = true
+
+[node name="Pickups" type="Node2D" parent="."]
+
+[node name="HpPickup" parent="Pickups" instance=ExtResource("6_ht8f1")]
+offset_left = 960.0
+offset_top = 128.0
+offset_right = 960.0
+offset_bottom = 128.0

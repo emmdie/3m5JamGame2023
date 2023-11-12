@@ -32,4 +32,5 @@ shape = SubResource("RectangleShape2D_cewrc")
 [node name="PickupSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_jisll")
 
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="finished" from="PickupSound" to="." method="_on_pickup_sound_finished"]
