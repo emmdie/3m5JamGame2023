@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcdjdw720uvxi"]
+[gd_scene load_steps=7 format=3 uid="uid://dcdjdw720uvxi"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_iw4r8"]
 [ext_resource type="Texture2D" uid="uid://xutxjdy0wor3" path="res://Assets/Art/character/frog.png" id="2_ihoxk"]
 [ext_resource type="Script" path="res://Scripts/Character/PlayerHealth.gd" id="3_hq0bs"]
+[ext_resource type="Script" path="res://Scripts/Character/Stats.gd" id="4_05ab4"]
 [ext_resource type="Texture2D" uid="uid://df803xu7tdyq" path="res://Assets/Art/character/frogTongue.png" id="4_k4geu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vdxo6"]
@@ -26,7 +27,11 @@ collision_mask = 4
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("3_hq0bs")
 
+[node name="Stats" type="Node2D" parent="."]
+script = ExtResource("4_05ab4")
+
 [node name="PlayerTongue" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(2, 1.19209e-07)
 rotation = -3.17475
 texture = ExtResource("4_k4geu")
