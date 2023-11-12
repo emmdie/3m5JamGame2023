@@ -210,7 +210,7 @@ func next_level():
 	Autoload.next_level()
 	var level = load(Autoload.get_level())
 	level = level.instantiate()
-	get_tree().root.add_child(Autoload.get_level())
+	get_tree().root.add_child(level)
 	queue_free()
 	
 		
