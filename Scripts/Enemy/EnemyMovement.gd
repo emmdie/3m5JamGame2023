@@ -122,31 +122,29 @@ func get_xy_distance(from_id, to_id):
 func random_destination():
 	while(true):
 		destination_id = randi() % a_star.get_point_count()
-		print("TO: " + str(a_star_dict.get(destination_id)))
-		print("START " + str(STARTING_POSITION))
 		var distance = get_xy_distance(STARTING_POSITION, destination_id)
-		print(distance)
-		if distance[0] < MAX_RANGE_X and distance[1] < MAX_RANGE_Y:
+		path = a_star.get_point_path(current_pos_id, destination_id)
+
+		if distance[0] < MAX_RANGE_X and path.size() > 1 and distance[1] < MAX_RANGE_Y:
 			break
-	
-	
-	path = a_star.get_point_path(current_pos_id, destination_id)
-	if(path.is_empty()):
-		random_destination()
 	
 
 func check_surroundings(range) -> bool:
 	var found = false
 	var player_pos = Autoload.get_player_pos()
-	var neighbor_cells = tile_map.get_surrounding_cells(current_pos_coords)
-	get_cells_in_range(range)
-	for cell in get_cells_in_range(range):
-		if(Vector2(cell) == Autoload.get_player_pos()):
-			enemy.detect_player()
-			track_target = cell
-			found = true
-			return found
-			break
+	for tile in a_star_dict.values():
+		if(player_pos == Vector2(tile)):
+			
+			var neighbor_cells = tile_map.get_surrounding_cells(current_pos_coords)
+			get_cells_in_range(range)
+			for cell in get_cells_in_range(range):
+				if(Vector2(cell) == Autoload.get_player_pos()):
+					enemy.detect_player()
+					track_target = cell
+					found = true
+					return found
+					break
+		
 	return found
 #			if(Autoload.filled_cells[key] >= Autoload.CELLFILLERS.free):
 #				continue
