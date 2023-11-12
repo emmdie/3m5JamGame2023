@@ -13,6 +13,8 @@ func update_health():
 	health_bar.value = PlayerStats.current_health
 	if health_bar.value < previous_health:
 		play_hit_effect()
+	if PlayerStats.current_health <= 0:
+		$GameOverScreen.show_game_over()
 
 func play_hit_effect():
 	portrait.play_hit_effect()
