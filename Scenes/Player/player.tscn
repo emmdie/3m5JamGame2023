@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dcdjdw720uvxi"]
+[gd_scene load_steps=8 format=3 uid="uid://dcdjdw720uvxi"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_iw4r8"]
 [ext_resource type="Texture2D" uid="uid://xutxjdy0wor3" path="res://Assets/Art/character/frog.png" id="2_ihoxk"]

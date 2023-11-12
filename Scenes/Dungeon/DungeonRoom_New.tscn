@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bnv11ul5djnd" path="res://Assets/Art/UI/vignette.png" id="4_s0rp2"]
 [ext_resource type="AudioStream" uid="uid://dbolu6qvh036" path="res://Assets/Music/dungeon.wav" id="5_dpsvc"]
 [ext_resource type="PackedScene" uid="uid://cpm1eq324ipf3" path="res://Scenes/Items/hp_pickup.tscn" id="6_ht8f1"]
+[ext_resource type="PackedScene" uid="uid://200ugh5ayc00" path="res://Scenes/Dungeon/goal.tscn" id="9_tbp66"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_03c56"]
 texture = ExtResource("1_tkr15")
@@ -549,6 +550,7 @@ grow_vertical = 1
 [node name="Enemy2" parent="Enemies" instance=ExtResource("4_60bap")]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("4_60bap")]
+[node name="Goal" parent="." instance=ExtResource("9_tbp66")]
 
 [node name="Pickups" type="Node2D" parent="."]
 
