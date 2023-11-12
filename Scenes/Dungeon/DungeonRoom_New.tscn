@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://ckonxdi2a227l"]
+[gd_scene load_steps=9 format=3 uid="uid://ckonxdi2a227l"]
 
+[ext_resource type="Script" path="res://Scripts/Dungeon/DungeonRoom_New.gd" id="1_51lp3"]
 [ext_resource type="Texture2D" uid="uid://sg8h88ukqwrf" path="res://Assets/Art/Environment/Terrain.png" id="1_tkr15"]
 [ext_resource type="PackedScene" uid="uid://dcdjdw720uvxi" path="res://Scenes/Player/player.tscn" id="2_obs2u"]
 [ext_resource type="PackedScene" uid="uid://divra4xn63epr" path="res://Scenes/Ui/hud.tscn" id="3_cingh"]
@@ -495,6 +496,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_51lp3")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_fltl8")
@@ -504,13 +506,25 @@ layer_0/tile_data = PackedInt32Array(196610, 65536, 3, 262147, 0, 1, 327683, 262
 [node name="Player" parent="." instance=ExtResource("2_obs2u")]
 position = Vector2(832, 128)
 
-[node name="HUD" parent="." instance=ExtResource("3_cingh")]
-layout_mode = 1
-
-[node name="Enemy" parent="." instance=ExtResource("4_60bap")]
+[node name="Camera2D2" type="Camera2D" parent="Player"]
+position = Vector2(1, 7)
+zoom = Vector2(2, 2)
 
 [node name="Bg_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_dpsvc")
 autoplay = true
 
-[node name="Enemy2" parent="." instance=ExtResource("4_60bap")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("3_cingh")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("4_60bap")]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("4_60bap")]
