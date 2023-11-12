@@ -39,11 +39,15 @@ func _unhandled_input(event):
 func move(dir):
 	walkable_ray.target_position = arrow_keys[dir] * tile_size
 	walkable_ray.force_raycast_update()
+	
 	if walkable_ray.is_colliding():
+		$PlayerMovementSFX.play()
 		var tween = create_tween()
 		tween.finished.connect(_on_moving_tween_finished)
 		tween.tween_property(self, "position",position + arrow_keys[dir] *    tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_SINE)
 		moving = true
+	else:
+		$PlayerBumpIntoWallSFX.play()
 
 #erlaubt den Spieler nach abspielen der Animation wieder zu bewegen
 func _on_moving_tween_finished():
@@ -52,6 +56,7 @@ func _on_moving_tween_finished():
 func attack(dir):
 	attack_ray.target_position = wasd[dir] * tile_size
 	attack_ray.force_raycast_update()
+	$PlayerTongueSFX.play();
 	if dir == "D":
 		tongue.flip_v = false
 		tongue.rotation = 0
