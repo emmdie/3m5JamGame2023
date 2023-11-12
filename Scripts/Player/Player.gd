@@ -3,6 +3,7 @@ extends Area2D
 signal player_turn
 signal attack_hit
 signal platform_boarded
+signal item_pickup
 @export var bump_sound = load("res://Assets/Music/SFX/Bumping into Wall.wav")
 @export var attack_sound = load("res://Assets/Music/SFX/Zunge.wav")
 
@@ -91,11 +92,11 @@ func force_move(dir):
 	var destination = Autoload.filled_cells.get(prev_pos + dir)
 	if(destination != null ):
 		update_cells(dir)
+		emit_signal("player_turn")
 		var tween = create_tween()
 		tween.finished.connect(_on_moving_tween_finished)
 		tween.tween_property(self, "position",position + dir *    tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_SINE)
 		moving = true
-		emit_signal("player_turn")
 
 func jump_vertical(dir):
 	var destination = Autoload.filled_cells.get(prev_pos + dir)
@@ -124,18 +125,20 @@ func jump_horizontal(dir):
 
 func update_cells(direction):
 	var new_pos = prev_pos + direction
-	print("step on: ", str(Autoload.filled_cells.get(new_pos)), "coord: ", str(new_pos))
-	if(Autoload.filled_cells.get(new_pos) == Autoload.CELLFILLERS.platform):
-		on_platform = true
-		emit_signal("platform_boarded", new_pos)
-	if Autoload.filled_cells.get(new_pos) == Autoload.CELLFILLERS.goal:
-		next_level()
-	else: if(on_platform): on_platform = false
+	check_next_cell(new_pos)
+	
 	Autoload.filled_cells[new_pos] = Autoload.CELLFILLERS.player
 	Autoload.filled_cells[prev_pos] = Autoload.CELLFILLERS.free
 	prev_pos = new_pos
 	
-
+func check_next_cell(next_cell):
+	var cell = Autoload.filled_cells.get(next_cell)
+	if(cell == Autoload.CELLFILLERS.platform):
+		on_platform = true
+		emit_signal("platform_boarded", next_cell)
+	else: if(on_platform): on_platform = false
+	if(cell == Autoload.CELLFILLERS.item):
+		emit_signal("item_pickup", next_cell)
 #erlaubt den Spieler nach abspielen der Animation wieder zu bewegen
 func _on_moving_tween_finished():
 	moving = false
@@ -177,8 +180,6 @@ func _on_tongue_tween_finished():
 	await get_tree().create_timer(0.05).timeout
 	tongue.hide()
 	moving = false
-
-
 
 func check_enemy_presence(direction):
 	var attack_destination = prev_pos + direction

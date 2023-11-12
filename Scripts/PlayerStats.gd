@@ -13,6 +13,9 @@ func update_health(new_health : int):
 	current_health = new_health
 	emit_signal("health_change")
 
+func take_damage(amount: int):
+	current_health -= amount
+	emit_signal("health_change")
 func reset_player_progress():
 	current_health = default_max_health
 	max_health = default_max_health

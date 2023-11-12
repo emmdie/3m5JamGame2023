@@ -57,7 +57,10 @@ func prepare_Tilemap_for_astar():
 
 #places the enemy on a random position on the tilemap
 func spawn_on_tilemap():
-	var point_id = randi() % a_star.get_point_count()
+	var point_id
+	if(enemy.spawn_coords == Vector2i.ZERO):
+		point_id = randi() % a_star.get_point_count()
+	else: point_id = a_star_dict.find_key(enemy.spawn_coords)
 	var start_pos = a_star.get_point_position(point_id)
 	position = to_global(tile_map.map_to_local(start_pos))
 	print(point_id, start_pos, position)
@@ -70,7 +73,7 @@ func spawn_on_tilemap():
 
 
 func move(random := true):
-	if path_index >= path.size():
+	if path_index >= path.size() || Autoload.filled_cells[path[path_index]] != Autoload.CELLFILLERS.free:
 		current_pos_id = destination_id
 		path_index = 1
 		if random: random_destination()

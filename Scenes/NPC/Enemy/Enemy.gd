@@ -13,6 +13,7 @@ var current_state
 @export var aggro_range := 3
 @export var attack_range := 1
 @export var damage := 5
+@export var spawn_coords : Vector2i
 var health := randi_range(5, 25) 
 var granted_exp = 1
 #To be replaced with signals for when player turn happened
