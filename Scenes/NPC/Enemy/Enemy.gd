@@ -17,6 +17,8 @@ var timer
 @export
 var countdown := 0.5
 
+@onready var gothit = $Movement/Sprite2D
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player.player_turn.connect(turn)
@@ -68,11 +70,21 @@ func set_attack():
 func attack():
 	player.take_damage(damage)
 
+
 func take_damage(amount: int):
 	health -= amount
 	#visual feedback
 	if(health <= 0):
 		die()
+	else:
+		var tween = get_tree().create_tween()
+		tween.finished.connect(reset_color_modulation)
+		tween.tween_property(gothit, "modulate", Color(1, 0, 0), 0.2)
+		
+@onready var previousColor = gothit.modulate
+
+func reset_color_modulation():
+	gothit.modulate = previousColor
 
 func die():
 	Autoload.filled_cells[Vector2(movement.current_pos_coords)] = Autoload.CELLFILLERS.free
