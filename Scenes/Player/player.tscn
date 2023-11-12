@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcdjdw720uvxi"]
+[gd_scene load_steps=6 format=3 uid="uid://dcdjdw720uvxi"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_iw4r8"]
 [ext_resource type="Texture2D" uid="uid://xutxjdy0wor3" path="res://Assets/Art/character/frog.png" id="2_ihoxk"]
 [ext_resource type="Script" path="res://Scripts/Character/PlayerHealth.gd" id="3_hq0bs"]
+[ext_resource type="Texture2D" uid="uid://df803xu7tdyq" path="res://Assets/Art/character/frogTongue.png" id="4_k4geu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vdxo6"]
 size = Vector2(64, 64)
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_iw4r8")
+metadata/_edit_vertical_guides_ = [-192.0, 384.0]
 
 [node name="PlayerSkin" type="Sprite2D" parent="."]
 texture = ExtResource("2_ihoxk")
@@ -19,9 +21,17 @@ shape = SubResource("RectangleShape2D_vdxo6")
 [node name="PlayerWalkableChecker" type="RayCast2D" parent="."]
 collision_mask = 4
 
+[node name="PlayerAttackDirection" type="RayCast2D" parent="."]
+
 [node name="PlayerAnimator" type="AnimationPlayer" parent="."]
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("3_hq0bs")
 
-[node name="PlayerSounds" type="AudioStreamPlayer2D" parent="."]
+[node name="PlayerTongue" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(2, 1.19209e-07)
+rotation = -3.17475
+texture = ExtResource("4_k4geu")
+centered = false
+flip_v = true

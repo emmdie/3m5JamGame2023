@@ -63,10 +63,11 @@ func attack(dir):
 	if dir == "D":
 		tongue.flip_v = false
 		tongue.rotation = 0
+		tongue.show()
 		stretch_tongue()
 		tongue.flip_v = true
 	if dir == "W":
-		tongue.rotation = -0.5*PI
+		tongue.rotation = -0.5 * PI
 		tongue.show()
 		stretch_tongue()
 	if dir == "A":
@@ -76,8 +77,11 @@ func attack(dir):
 		stretch_tongue()
 		tongue.flip_h = false
 	if dir == "S":
-		tongue.rotation = 0.5*PI
+		tongue.rotation = 0.5 * PI
+		tongue.show()
 		stretch_tongue()
+	if attack_ray.is_colliding():
+		attack_ray.get_collider().queue_free()
 
 func stretch_tongue():
 	var tween = create_tween()
@@ -85,8 +89,12 @@ func stretch_tongue():
 	tween.tween_property(tongue,"scale",Vector2(tongue_animation_reach,1), 1.0/tongue_animation_speed).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(tongue,"scale",Vector2(1,1), 1.0/tongue_animation_speed).set_trans(Tween.TRANS_LINEAR)
 	
+
 func _on_tongue_tween_finished():
+	await get_tree().create_timer(0.05).timeout
+	tongue.hide()
 	moving = false
+	
 
 func _process(_delta):
 	pass
