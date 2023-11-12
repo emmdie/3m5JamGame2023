@@ -1,5 +1,7 @@
 extends Node2D
 
+signal died(EXP)
+
 enum STATE {idle, tracking, attack}
 var current_state
 
@@ -12,6 +14,7 @@ var current_state
 @export var attack_range := 1
 @export var damage := 5
 var health := randi_range(5, 25) 
+var granted_exp = 1
 #To be replaced with signals for when player turn happened
 var timer
 @export
@@ -88,6 +91,7 @@ func reset_color_modulation():
 
 func die():
 	Autoload.filled_cells[Vector2(movement.current_pos_coords)] = Autoload.CELLFILLERS.free
+	died.emit(granted_exp)
 	queue_free()
 
 func check_if_hit(pos, amount):

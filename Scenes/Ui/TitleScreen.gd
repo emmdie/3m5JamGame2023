@@ -12,3 +12,4 @@ func _on_play_button_pressed():
 	level = level.instantiate()
 	get_tree().root.add_child(level)
 	queue_free()
+
