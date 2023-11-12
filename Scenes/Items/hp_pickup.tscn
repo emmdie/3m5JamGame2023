@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpm1eq324ipf3"]
+
+[ext_resource type="Script" path="res://Scripts/Items/hp_pickup.gd" id="1_gj7ke"]
+[ext_resource type="Texture2D" uid="uid://c1x60lugebfl2" path="res://Assets/Art/items/apple.png" id="1_ixov6"]
+[ext_resource type="AudioStream" uid="uid://c2wbn0xaaelhs" path="res://Assets/Music/SFX/Collectibles.wav" id="3_jisll"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cewrc"]
+size = Vector2(60, 60)
+
+[node name="HpPickup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gj7ke")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_ixov6")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(33, 31)
+shape = SubResource("RectangleShape2D_cewrc")
+
+[node name="PickupSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jisll")
+
+[connection signal="finished" from="PickupSound" to="." method="_on_pickup_sound_finished"]
