@@ -25,7 +25,7 @@ func get_player_pos():
 
 func prepare_cells(cells):
 	for cell in cells:
-		filled_cells[Vector2(cell)] = 99
+		filled_cells[Vector2(cell)] = CELLFILLERS.free
 
 func print_cells():
 	var string = ""
