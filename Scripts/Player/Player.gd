@@ -1,9 +1,12 @@
 extends Area2D
 
+@export var bump_sound = load("res://Assets/Music/SFX/Bumping into Wall.wav")
+@export var attack_sound = load("res://Assets/Music/SFX/Zunge.wav")
 
 @onready var walkable_ray = $PlayerWalkableChecker
 @onready var attack_ray = $PlayerAttackDirection
 @onready var tongue = $PlayerTongue
+@onready var audio_player = $PlayerSounds
 var tile_size = 64
 var arrow_keys = {"RIGHT": Vector2.RIGHT,
 			"LEFT": Vector2.LEFT,
@@ -44,12 +47,17 @@ func move(dir):
 		tween.finished.connect(_on_moving_tween_finished)
 		tween.tween_property(self, "position",position + arrow_keys[dir] *    tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_SINE)
 		moving = true
+	else :
+		audio_player.stream = bump_sound
+		audio_player.play()
 
 #erlaubt den Spieler nach abspielen der Animation wieder zu bewegen
 func _on_moving_tween_finished():
 	moving = false
 
 func attack(dir):
+	audio_player.stream = attack_sound
+	audio_player.play()
 	attack_ray.target_position = wasd[dir] * tile_size
 	attack_ray.force_raycast_update()
 	if dir == "D":
