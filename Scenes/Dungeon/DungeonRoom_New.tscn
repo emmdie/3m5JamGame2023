@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckonxdi2a227l"]
+[gd_scene load_steps=11 format=3 uid="uid://cy1vqsfenrm4o"]
 
-[ext_resource type="Script" path="res://Scenes/Dungeon/DungeonRoom_New.gd" id="1_jr2kw"]
+[ext_resource type="Script" path="res://Scripts/Dungeon/DungeonRoom_New.gd" id="1_51lp3"]
 [ext_resource type="Texture2D" uid="uid://sg8h88ukqwrf" path="res://Assets/Art/Environment/Terrain.png" id="1_tkr15"]
 [ext_resource type="PackedScene" uid="uid://dcdjdw720uvxi" path="res://Scenes/Player/player.tscn" id="2_obs2u"]
-[ext_resource type="PackedScene" path="res://Scenes/Ui/hud.tscn" id="3_cingh"]
+[ext_resource type="PackedScene" uid="uid://bq1v2xa1s30bd" path="res://Scenes/Ui/hud.tscn" id="3_cingh"]
+[ext_resource type="Shader" path="res://Scenes/Dungeon/DungeonRoom_New.gdshader" id="3_0hhf8"]
+
 [ext_resource type="PackedScene" uid="uid://bgprrf6gn5xmf" path="res://Scenes/NPC/Enemy/enemy.tscn" id="4_60bap"]
+[ext_resource type="Texture2D" uid="uid://bnv11ul5djnd" path="res://Assets/Art/UI/vignette.png" id="4_s0rp2"]
 [ext_resource type="AudioStream" uid="uid://dbolu6qvh036" path="res://Assets/Music/dungeon.wav" id="5_dpsvc"]
 [ext_resource type="PackedScene" uid="uid://cpm1eq324ipf3" path="res://Scenes/Items/hp_pickup.tscn" id="6_ht8f1"]
 
@@ -490,6 +493,14 @@ terrain_set_0/terrain_0/name = "DungeonTerrain"
 terrain_set_0/terrain_0/color = Color(0.501961, 0.345098, 0.25098, 1)
 sources/0 = SubResource("TileSetAtlasSource_03c56")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5s43s"]
+shader = ExtResource("3_0hhf8")
+shader_parameter/player_position = Vector2(0, 0)
+shader_parameter/color = Vector4(0.305, 0.298, 0.341, 1)
+shader_parameter/MULTIPLIER = 0.56
+shader_parameter/SCALE = 0.5
+shader_parameter/SOFTNESS = 0.65
+
 [node name="DungeonRoom_New" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -497,7 +508,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_jr2kw")
+
+script = ExtResource("1_51lp3")
+
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_fltl8")
@@ -505,10 +518,13 @@ format = 2
 layer_0/tile_data = PackedInt32Array(196610, 65536, 3, 262147, 0, 1, 327683, 262144, 1, 327684, 720896, 0, 393219, 524288, 1, 458755, 524288, 1, 458756, 589824, 2, 524292, 589824, 2, 524293, 589824, 2, 524294, 393216, 1, 524295, 655360, 0, 393220, 393216, 1, 393221, 720896, 0, 458757, 393216, 1, 458758, 720896, 0, 589829, 589824, 3, 589830, 327680, 2, 524296, 458752, 1, 524291, 524288, 1, 589827, 524288, 3, 589828, 589824, 3, 589831, 393216, 2, 589832, 720896, 3, 655366, 524288, 1, 655367, 720896, 2, 720903, 720896, 1, 720904, 131072, 3, 720905, 131072, 0, 720907, 393216, 3, 720906, 327680, 3, 720908, 196608, 3, 655371, 720896, 0, 655370, 524288, 0, 786441, 0, 1, 851977, 196608, 2, 851976, 393216, 0, 917512, 720896, 3, 917511, 524288, 3, 851975, 655360, 2, 851974, 589824, 3, 786438, 589824, 2, 720902, 327680, 1, 786439, 720896, 2, 786437, 327680, 1, 851973, 589824, 3, 720901, 524288, 0, 851972, 393216, 2, 917508, 720896, 3, 917507, 524288, 3, 851971, 524288, 1, 786435, 524288, 0, 786436, 655360, 0, 196618, 524288, 0, 262154, 327680, 1, 327690, 327680, 2, 393227, 327680, 2, 393228, 589824, 2, 458764, 327680, 2, 458765, 393216, 1, 458766, 720896, 0, 524302, 393216, 3, 524304, 131072, 3, 524303, 131072, 3, 524305, 196608, 0, 589842, 720896, 0, 655378, 458752, 2, 720914, 0, 1, 786450, 65536, 2, 786451, 131072, 3, 786452, 524288, 2, 786453, 589824, 2, 655377, 524288, 3, 589841, 262144, 1, 524301, 589824, 3, 524300, 524288, 3, 458763, 524288, 3, 393226, 524288, 3, 327689, 589824, 3, 327688, 262144, 2, 262152, 524288, 0, 262153, 655360, 0, 196619, 458752, 1, 262156, 720896, 0, 327692, 393216, 1, 327693, 393216, 0, 327691, 589824, 2, 262155, 393216, 1, 393229, 720896, 2, 327694, 131072, 3, 327695, 131072, 3, 327696, 196608, 2, 262160, 0, 1, 196624, 0, 1, 131088, 655360, 3, 131087, 589824, 3, 131086, 589824, 3, 131085, 589824, 3, 131084, 589824, 3, 131083, 262144, 2, 65547, 524288, 0, 65548, 655360, 0, 65549, 655360, 0, 65550, 655360, 0, 65552, 655360, 0, 65551, 655360, 0, 65553, 720896, 0, 131090, 327680, 0, 131091, 655360, 0, 131092, 655360, 0, 131093, 655360, 0, 131094, 655360, 0, 131095, 655360, 0, 131096, 655360, 0, 131097, 655360, 0, 196633, 589824, 3, 196632, 393216, 2, 262168, 720896, 3, 262167, 262144, 2, 327703, 0, 1, 393239, 0, 1, 458775, 0, 1, 524311, 589824, 0, 524312, 720896, 0, 589848, 393216, 1, 589849, 393216, 0, 655385, 720896, 2, 720921, 720896, 2, 786457, 720896, 3, 786456, 393216, 2, 851992, 720896, 3, 851991, 589824, 3, 851990, 589824, 3, 851989, 589824, 3, 720916, 524288, 1, 655380, 524288, 0, 655381, 327680, 1, 589845, 524288, 1, 524310, 655360, 0, 589846, 589824, 2, 524309, 524288, 0, 655382, 589824, 2, 589847, 589824, 2, 720917, 589824, 2, 720918, 589824, 2, 851988, 524288, 3, 786454, 589824, 2, 655383, 589824, 2, 786455, 589824, 2, 720919, 589824, 2, 720920, 589824, 2, 589850, 196608, 3, 655384, 589824, 2, 131089, 393216, 3, 196627, 589824, 3, 196628, 589824, 3, 196629, 589824, 3, 196630, 589824, 3, 196631, 327680, 2, 196626, 524288, 3, 131098, 655360, 0, 196634, 589824, 3, 196635, 720896, 3, 262172, 65536, 3, 262173, 131072, 3, 196638, 0, 1, 131102, 65536, 0, 131103, 196608, 2, 65567, 0, 1, 31, 196608, 0, 30, 131072, 3, 29, 65536, 0, 65565, 196608, 2, 65564, 131072, 3, 65563, 65536, 0, 131099, 458752, 1, 196611, 196608, 0, 327698, 0, 3, 327700, 0, 3, 393235, 0, 3, 262174, 196608, 2, 393224, 0, 1, 458760, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("2_obs2u")]
+use_parent_material = true
 position = Vector2(832, 128)
 
 [node name="Camera2D2" type="Camera2D" parent="Player"]
 position = Vector2(1, 7)
+material = SubResource("ShaderMaterial_5s43s")
+zoom = Vector2(2, 2)
 
 [node name="Enemy" parent="." instance=ExtResource("4_60bap")]
 
@@ -519,6 +535,14 @@ stream = ExtResource("5_dpsvc")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_s0rp2")
+stretch_mode = 3
 [node name="HUD" parent="CanvasLayer" instance=ExtResource("3_cingh")]
 anchors_preset = 0
 anchor_right = 0.0
@@ -526,6 +550,11 @@ anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("4_60bap")]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("4_60bap")]
 [node name="Pickups" type="Node2D" parent="."]
 
 [node name="HpPickup" parent="Pickups" instance=ExtResource("6_ht8f1")]
