@@ -8,6 +8,7 @@ signal player_turn
 @onready var attack_ray = $PlayerAttackDirection
 @onready var tongue = $PlayerTongue
 @onready var audio_player = $PlayerSounds
+@onready var health = $Health
 var tile_size = 64
 var arrow_keys = {"RIGHT": Vector2.RIGHT,
 			"LEFT": Vector2.LEFT,
@@ -47,8 +48,8 @@ func _unhandled_input(event):
 func move(dir):
 	walkable_ray.target_position = arrow_keys[dir] * tile_size
 	walkable_ray.force_raycast_update()
-	if walkable_ray.is_colliding() && Autoload.filled_cells[prev_pos + inputs[dir]] != Autoload.CELLFILLERS.enemy:
-		update_cells(inputs[dir])
+	if walkable_ray.is_colliding() && Autoload.filled_cells[prev_pos + arrow_keys[dir]] != Autoload.CELLFILLERS.enemy:
+		update_cells(arrow_keys[dir])
 		var tween = create_tween()
 		tween.finished.connect(_on_moving_tween_finished)
 		tween.tween_property(self, "position",position + arrow_keys[dir] *    tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_SINE)
@@ -110,5 +111,5 @@ func _on_tongue_tween_finished():
 	moving = false
 	
 
-func _process(_delta):
-	pass
+func take_damage(damage : int):
+	health.take_damage(damage)

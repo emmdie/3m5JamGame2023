@@ -65,7 +65,7 @@ func move(random := true):
 		path_index = 1
 		if random: random_destination()
 	if(Autoload.filled_cells[path[path_index]] == Autoload.CELLFILLERS.player):
-		print("ATTACK from move")
+		enemy.attack()
 		path.clear()
 		return
 	var next_point = Vector2i(path[path_index])

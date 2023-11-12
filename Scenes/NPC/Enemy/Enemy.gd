@@ -11,6 +11,7 @@ var current_state
 
 @export var aggro_range := 3
 @export var attack_range := 1
+@export var damage := 5
 #To be replaced with signals for when player turn happened
 var timer
 @export
@@ -70,6 +71,7 @@ func set_attack():
 	current_state = STATE.attack
 	
 func attack():
+	player.take_damage(damage)
 	print("attack()")
 
 func set_idle():
