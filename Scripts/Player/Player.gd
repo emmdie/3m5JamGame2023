@@ -11,6 +11,7 @@ signal platform_boarded
 @onready var audio_player = $PlayerSounds
 @onready var health = $Health
 @onready var stats = $Stats
+
 @onready var damage_label = $DamageLabel
 @onready var damage_timer = $damageTImer
 
@@ -129,6 +130,8 @@ func update_cells(direction):
 	if(Autoload.filled_cells.get(new_pos) == Autoload.CELLFILLERS.platform):
 		on_platform = true
 		emit_signal("platform_boarded", new_pos)
+	if Autoload.filled_cells.get(new_pos) == Autoload.CELLFILLERS.goal:
+		next_level()
 	else: if(on_platform): on_platform = false
 	Autoload.filled_cells[new_pos] = Autoload.CELLFILLERS.player
 	Autoload.filled_cells[prev_pos] = Autoload.CELLFILLERS.free
@@ -195,7 +198,7 @@ func take_damage(damage : int):
 func _process(delta):
 	if(on_platform):
 		platform_counter -= delta
-		if(platform_counter == 0):
+		if(platform_counter == 0):	
 			force_move(platform_direction)
 		pass
 	damage_label.position += Vector2(0, -60*delta)
@@ -204,6 +207,18 @@ func sync_with_platform(counter, direction):
 	platform_counter = counter
 	platform_direction = direction
 
-
 func _on_damage_t_imer_timeout():
 	damage_label.visible = false
+
+func next_level():
+	print('DONE')
+	$NextLevelSound.play()
+	
+	
+	print('NEXT')
+	#TODO load new level
+	Autoload.next_level()
+	var level = load(Autoload.get_level())
+	level = level.instantiate()
+	get_tree().root.add_child(level)
+	queue_free()

@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/Character/Stats.gd" id="4_05ab4"]
 [ext_resource type="Texture2D" uid="uid://df803xu7tdyq" path="res://Assets/Art/character/frogTongue.png" id="4_k4geu"]
 [ext_resource type="Theme" uid="uid://bc1cfh5md60wd" path="res://Assets/game_theme.tres" id="6_ngrdg"]
+[ext_resource type="AudioStream" uid="uid://bpcuk3r7yswn5" path="res://Assets/Music/SFX/Level Complete.wav" id="7_8j056"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vdxo6"]
 size = Vector2(64, 64)
@@ -15,7 +16,6 @@ script = ExtResource("1_iw4r8")
 metadata/_edit_vertical_guides_ = [-192.0, 384.0]
 
 [node name="PlayerSkin" type="Sprite2D" parent="."]
-scale = Vector2(0.333, 0.333)
 texture = ExtResource("2_ihoxk")
 
 [node name="PlayerCollisionBox" type="CollisionShape2D" parent="."]
@@ -36,7 +36,6 @@ script = ExtResource("4_05ab4")
 visible = false
 position = Vector2(2, 1.19209e-07)
 rotation = -3.17475
-scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_k4geu")
 centered = false
 flip_v = true
@@ -55,3 +54,6 @@ text = "18"
 [node name="damageTImer" type="Timer" parent="."]
 
 [connection signal="timeout" from="damageTImer" to="." method="_on_damage_t_imer_timeout"]
+
+[node name="NextLevelSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_8j056")
