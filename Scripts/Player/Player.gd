@@ -10,6 +10,7 @@ signal attack_hit
 @onready var audio_player = $PlayerSounds
 @onready var health = $Health
 var tile_size = 64
+var jump_length := 2
 var arrow_keys = {"RIGHT": Vector2.RIGHT,
 			"LEFT": Vector2.LEFT,
 			"UP": Vector2.UP,
@@ -18,6 +19,10 @@ var wasd = {"W": Vector2.UP,
 			"A": Vector2.LEFT,
 			"S": Vector2.DOWN,
 			"D": Vector2.RIGHT}
+var jump_keys = {"JUMPRIGHT": Vector2.RIGHT * jump_length,
+			"JUMPLEFT": Vector2.LEFT * jump_length,
+			"JUMPUP": Vector2.UP * jump_length,
+			"JUMPDOWN": Vector2.DOWN * jump_length}
 
 var walking_animation_speed = 6
 var tongue_animation_reach = 2.5
@@ -30,7 +35,7 @@ var attack_damage = 5
 func _ready():
 	position = position.snapped(Vector2.ONE * tile_size)
 	position += Vector2.ONE * tile_size/2
-	#BAD MAGIC NUMBER
+	#BAD MAGIC NUMBER to know where the player starts on the tilemap
 	Autoload.filled_cells[Vector2(13,2)] = Autoload.CELLFILLERS.player
 	prev_pos = Vector2(13,2)
 
@@ -38,27 +43,62 @@ func _ready():
 func _unhandled_input(event):
 	if moving:
 		return
+	for dir in jump_keys.keys():
+		if event.is_action_pressed(dir):
+			if(dir == "JUMPLEFT" || dir == "JUMPRIGHT"):
+				jump_horizontal(jump_keys[dir])
+			if(dir == "JUMPUP" || dir == "JUMPDOWN"):
+				jump_vertical(jump_keys[dir])
+			emit_signal("player_turn")
+			return
 	for dir in arrow_keys.keys():
 		if event.is_action_pressed(dir):
-			move(dir)
+			move(arrow_keys[dir])
+			return
 	for dir in wasd.keys():
 		if event.is_action_pressed(dir):
 			attack(dir)
+			return
 
 #moves and animates the movement
 func move(dir):
-	walkable_ray.target_position = arrow_keys[dir] * tile_size
+	walkable_ray.target_position = dir * tile_size
 	walkable_ray.force_raycast_update()
-	if walkable_ray.is_colliding() && Autoload.filled_cells[prev_pos + arrow_keys[dir]] != Autoload.CELLFILLERS.enemy:
-		update_cells(arrow_keys[dir])
+	if walkable_ray.is_colliding() && Autoload.filled_cells.get(prev_pos + dir) != Autoload.CELLFILLERS.enemy:
+		update_cells(dir)
 		var tween = create_tween()
 		tween.finished.connect(_on_moving_tween_finished)
-		tween.tween_property(self, "position",position + arrow_keys[dir] *    tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_SINE)
+		tween.tween_property(self, "position",position + dir *    tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_SINE)
 		moving = true
 		emit_signal("player_turn")
 	else :
 		audio_player.stream = bump_sound
 		audio_player.play()
+
+func jump_vertical(dir):
+	var destination = Autoload.filled_cells.get(prev_pos + dir)
+	var pos_x_start = position.x
+	var pos_x_end = position.x+dir.x-1.25 * tile_size
+	if(destination != null && destination != Autoload.CELLFILLERS.enemy):
+		update_cells(dir)
+		var tween_y = create_tween()
+		var tween = create_tween()
+		tween_y.tween_property(self, "position:y", position.y+dir.y * tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
+		tween.tween_property(self, "position:x", pos_x_end, 1.0/walking_animation_speed/2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "position:x", pos_x_start, 1.0/walking_animation_speed).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT).set_delay(1.0/walking_animation_speed/2)
+
+
+func jump_horizontal(dir):
+	var destination = Autoload.filled_cells.get(prev_pos + dir)
+	var pos_y_start = position.y
+	var pos_y_end = position.y+dir.y-1.25 * tile_size
+	if(destination != null && destination != Autoload.CELLFILLERS.enemy):
+		update_cells(dir)
+		var tween_x = create_tween()
+		var tween = create_tween()
+		tween_x.tween_property(self, "position:x", position.x+dir.x * tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
+		tween.tween_property(self, "position:y", pos_y_end, 1.0/walking_animation_speed/2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "position:y", pos_y_start, 1.0/walking_animation_speed).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT).set_delay(1.0/walking_animation_speed/2)
 
 func update_cells(direction):
 	var new_pos = prev_pos + direction

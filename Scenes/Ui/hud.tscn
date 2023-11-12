@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://divra4xn63epr"]
+[gd_scene load_steps=4 format=3 uid="uid://bq1v2xa1s30bd"]
 
 [ext_resource type="Script" path="res://Scenes/Ui/hud.gd" id="1_rx5rn"]
 [ext_resource type="PackedScene" uid="uid://b8fofhyseloab" path="res://Scenes/Ui/frame.tscn" id="3_2gufx"]
-[ext_resource type="PackedScene" uid="uid://hgpl2skgfmis" path="res://Scenes/Ui/hp_bar.tscn" id="3_pt5fg"]
-[ext_resource type="PackedScene" uid="uid://bg2fc7d30i5we" path="res://Scenes/Ui/game_over_screen.tscn" id="4_1wul4"]
+[ext_resource type="PackedScene" path="res://Scenes/Ui/hp_bar.tscn" id="3_pt5fg"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -25,6 +24,3 @@ layout_mode = 2
 
 [node name="hp_bar" parent="HBoxContainer" instance=ExtResource("3_pt5fg")]
 layout_mode = 2
-
-[node name="GameOverScreen" parent="." instance=ExtResource("4_1wul4")]
-layout_mode = 1
