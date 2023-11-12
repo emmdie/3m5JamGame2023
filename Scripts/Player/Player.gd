@@ -11,6 +11,8 @@ signal platform_boarded
 @onready var audio_player = $PlayerSounds
 @onready var health = $Health
 @onready var stats = $Stats
+
+
 var tile_size = 64
 var jump_length := 2
 var arrow_keys = {"RIGHT": Vector2.RIGHT,
@@ -126,6 +128,8 @@ func update_cells(direction):
 	if(Autoload.filled_cells.get(new_pos) == Autoload.CELLFILLERS.platform):
 		on_platform = true
 		emit_signal("platform_boarded", new_pos)
+	if Autoload.filled_cells.get(new_pos) == Autoload.CELLFILLERS.goal:
+		next_level()
 	else: if(on_platform): on_platform = false
 	Autoload.filled_cells[new_pos] = Autoload.CELLFILLERS.player
 	Autoload.filled_cells[prev_pos] = Autoload.CELLFILLERS.free
@@ -188,10 +192,26 @@ func take_damage(damage : int):
 func _process(delta):
 	if(on_platform):
 		platform_counter -= delta
-		if(platform_counter == 0):
+		if(platform_counter == 0):	
 			force_move(platform_direction)
 		pass
 
 func sync_with_platform(counter, direction):
 	platform_counter = counter
 	platform_direction = direction
+
+func next_level():
+	print('DONE')
+	$NextLevelSound.play()
+	
+	
+	print('NEXT')
+	#TODO load new level
+	Autoload.next_level()
+	var level = load(Autoload.get_level())
+	level = level.instantiate()
+	get_tree().root.add_child(Autoload.get_level())
+	queue_free()
+	
+		
+
