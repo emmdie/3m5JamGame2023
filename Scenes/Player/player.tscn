@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/Character/PlayerHealth.gd" id="3_hq0bs"]
 [ext_resource type="Script" path="res://Scripts/Character/Stats.gd" id="4_05ab4"]
 [ext_resource type="Texture2D" uid="uid://df803xu7tdyq" path="res://Assets/Art/character/frogTongue.png" id="4_k4geu"]
+[ext_resource type="Theme" uid="uid://bc1cfh5md60wd" path="res://Assets/game_theme.tres" id="6_ngrdg"]
 [ext_resource type="AudioStream" uid="uid://bpcuk3r7yswn5" path="res://Assets/Music/SFX/Level Complete.wav" id="7_8j056"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vdxo6"]
@@ -40,6 +41,19 @@ centered = false
 flip_v = true
 
 [node name="PlayerSounds" type="AudioStreamPlayer2D" parent="."]
+
+[node name="DamageLabel" type="Label" parent="."]
+visible = false
+offset_left = -12.0
+offset_top = -41.0
+offset_right = 28.0
+offset_bottom = -15.0
+theme = ExtResource("6_ngrdg")
+text = "18"
+
+[node name="damageTImer" type="Timer" parent="."]
+
+[connection signal="timeout" from="damageTImer" to="." method="_on_damage_t_imer_timeout"]
 
 [node name="NextLevelSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_8j056")
