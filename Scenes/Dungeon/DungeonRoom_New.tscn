@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cy1vqsfenrm4o"]
+[gd_scene load_steps=13 format=3 uid="uid://cy1vqsfenrm4o"]
 
 [ext_resource type="Script" path="res://Scripts/Dungeon/DungeonRoom_New.gd" id="1_51lp3"]
 [ext_resource type="Texture2D" uid="uid://sg8h88ukqwrf" path="res://Assets/Art/Environment/Terrain.png" id="1_tkr15"]
 [ext_resource type="PackedScene" uid="uid://dcdjdw720uvxi" path="res://Scenes/Player/player.tscn" id="2_obs2u"]
-[ext_resource type="PackedScene" uid="uid://bq1v2xa1s30bd" path="res://Scenes/Ui/hud.tscn" id="3_cingh"]
 [ext_resource type="Shader" path="res://Scenes/Dungeon/DungeonRoom_New.gdshader" id="3_0hhf8"]
-
+[ext_resource type="PackedScene" uid="uid://divra4xn63epr" path="res://Scenes/Ui/hud.tscn" id="3_cingh"]
 [ext_resource type="PackedScene" uid="uid://bgprrf6gn5xmf" path="res://Scenes/NPC/Enemy/enemy.tscn" id="4_60bap"]
 [ext_resource type="Texture2D" uid="uid://bnv11ul5djnd" path="res://Assets/Art/UI/vignette.png" id="4_s0rp2"]
 [ext_resource type="AudioStream" uid="uid://dbolu6qvh036" path="res://Assets/Music/dungeon.wav" id="5_dpsvc"]
@@ -494,12 +493,8 @@ terrain_set_0/terrain_0/color = Color(0.501961, 0.345098, 0.25098, 1)
 sources/0 = SubResource("TileSetAtlasSource_03c56")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5s43s"]
+render_priority = 0
 shader = ExtResource("3_0hhf8")
-shader_parameter/player_position = Vector2(0, 0)
-shader_parameter/color = Vector4(0.305, 0.298, 0.341, 1)
-shader_parameter/MULTIPLIER = 0.56
-shader_parameter/SCALE = 0.5
-shader_parameter/SOFTNESS = 0.65
 
 [node name="DungeonRoom_New" type="Control"]
 layout_mode = 3
@@ -522,8 +517,8 @@ use_parent_material = true
 position = Vector2(832, 128)
 
 [node name="Camera2D2" type="Camera2D" parent="Player"]
-position = Vector2(1, 7)
 material = SubResource("ShaderMaterial_5s43s")
+position = Vector2(1, 7)
 zoom = Vector2(2, 2)
 
 [node name="Enemy" parent="." instance=ExtResource("4_60bap")]
@@ -543,6 +538,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_s0rp2")
 stretch_mode = 3
+
 [node name="HUD" parent="CanvasLayer" instance=ExtResource("3_cingh")]
 anchors_preset = 0
 anchor_right = 0.0
@@ -555,6 +551,7 @@ grow_vertical = 1
 [node name="Enemy2" parent="Enemies" instance=ExtResource("4_60bap")]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("4_60bap")]
+
 [node name="Pickups" type="Node2D" parent="."]
 
 [node name="HpPickup" parent="Pickups" instance=ExtResource("6_ht8f1")]
