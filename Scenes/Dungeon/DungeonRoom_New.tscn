@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://sg8h88ukqwrf" path="res://Assets/Art/Environment/Terrain.png" id="1_tkr15"]
 [ext_resource type="PackedScene" uid="uid://dcdjdw720uvxi" path="res://Scenes/Player/player.tscn" id="2_obs2u"]
-[ext_resource type="PackedScene" path="res://Scenes/Ui/hud.tscn" id="3_cingh"]
+[ext_resource type="PackedScene" uid="uid://bq1v2xa1s30bd" path="res://Scenes/Ui/hud.tscn" id="3_cingh"]
 [ext_resource type="PackedScene" uid="uid://bgprrf6gn5xmf" path="res://Scenes/NPC/Enemy/enemy.tscn" id="4_60bap"]
 [ext_resource type="AudioStream" uid="uid://dbolu6qvh036" path="res://Assets/Music/dungeon.wav" id="5_dpsvc"]
 

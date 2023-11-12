@@ -56,6 +56,7 @@ func spawn_on_tilemap():
 	print(point_id, start_pos, position)
 	current_pos_id = point_id
 	current_pos_coords = start_pos
+	Autoload.filled_cells[Vector2(current_pos_coords)] = Autoload.CELLFILLERS.enemy
 
 
 

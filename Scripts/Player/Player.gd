@@ -14,10 +14,10 @@ var arrow_keys = {"RIGHT": Vector2.RIGHT,
 			"LEFT": Vector2.LEFT,
 			"UP": Vector2.UP,
 			"DOWN": Vector2.DOWN}
-var wasd = {"W": Vector2.RIGHT,
+var wasd = {"W": Vector2.UP,
 			"A": Vector2.LEFT,
-			"S": Vector2.UP,
-			"D": Vector2.DOWN}
+			"S": Vector2.DOWN,
+			"D": Vector2.RIGHT}
 
 var walking_animation_speed = 6
 var tongue_animation_reach = 2.5
