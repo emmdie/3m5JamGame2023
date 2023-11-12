@@ -3,7 +3,7 @@ const level = "res://Scenes/Dungeon/DungeonRoom_New.tscn"
 const title_screen = "res://Scenes/Ui/TitleScreen.tscn"
 const CELLSIZE := 64
 
-enum CELLFILLERS {item, player, free, platform, enemy}
+enum CELLFILLERS {enemy, item, player, free}
 var filled_cells := {Vector2.ZERO:-1}
 
 func update_cells(pos: Vector2, value):
