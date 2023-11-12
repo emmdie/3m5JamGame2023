@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://cx1pvh5ri6ful"]
+
+[ext_resource type="Texture2D" uid="uid://bhbwmk26pk7bo" path="res://Assets/Art/UI/LevelUpScreen/LevelUpScreen.png" id="1_10epj"]
+[ext_resource type="Script" path="res://Scenes/Ui/level_up_screen.gd" id="1_aaiux"]
+[ext_resource type="Theme" uid="uid://bc1cfh5md60wd" path="res://Assets/game_theme.tres" id="2_ux4o8"]
+[ext_resource type="AudioStream" uid="uid://bpcuk3r7yswn5" path="res://Assets/Music/SFX/Level Complete.wav" id="4_kuat2"]
+
+[node name="LevelUpScreen" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aaiux")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("1_10epj")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 600
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/TextureRect/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ux4o8")
+theme_override_font_sizes/font_size = 90
+text = "Level Up!"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HealthLabel" type="Label" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_ux4o8")
+text = "Max Health"
+
+[node name="HealthButton" type="Button" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
+text = "+1"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="DamageLabel" type="Label" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_ux4o8")
+text = "Max Health"
+
+[node name="DamageButton" type="Button" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
+text = "+1"
+
+[node name="LevelUpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_kuat2")
+
+[connection signal="pressed" from="CenterContainer/TextureRect/MarginContainer/VBoxContainer/HBoxContainer/HealthButton" to="." method="_on_health_button_pressed"]
+[connection signal="pressed" from="CenterContainer/TextureRect/MarginContainer/VBoxContainer/HBoxContainer2/DamageButton" to="." method="_on_damage_button_pressed"]
