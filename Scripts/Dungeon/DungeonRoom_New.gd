@@ -14,4 +14,5 @@ func _on_enemy_killed(EXP):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if !$Bg_music.playing:
+		$Bg_music.play()
