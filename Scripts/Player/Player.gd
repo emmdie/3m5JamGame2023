@@ -13,6 +13,8 @@ signal item_pickup
 @onready var health = $Health
 @onready var stats = $Stats
 
+@onready var damage_label = $DamageLabel
+@onready var damage_timer = $damageTImer
 
 var tile_size = 64
 var jump_length := 2
@@ -188,7 +190,11 @@ func check_enemy_presence(direction):
 		emit_signal("attack_hit", attack_destination, attack_damage)
 
 func take_damage(damage : int):
+	damage_label.visible = true
 	health.take_damage(damage)
+	damage_label.text = str(damage)
+	damage_label.position = Vector2(-12,-41)
+	damage_timer.start()
 
 func _process(delta):
 	if(on_platform):
@@ -196,10 +202,14 @@ func _process(delta):
 		if(platform_counter == 0):	
 			force_move(platform_direction)
 		pass
+	damage_label.position += Vector2(0, -60*delta)
 
 func sync_with_platform(counter, direction):
 	platform_counter = counter
 	platform_direction = direction
+
+func _on_damage_t_imer_timeout():
+	damage_label.visible = false
 
 func next_level():
 	print('DONE')
@@ -211,8 +221,5 @@ func next_level():
 	Autoload.next_level()
 	var level = load(Autoload.get_level())
 	level = level.instantiate()
-	get_tree().root.add_child(Autoload.get_level())
+	get_tree().root.add_child(level)
 	queue_free()
-	
-		
-
