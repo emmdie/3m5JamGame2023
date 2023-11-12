@@ -1,6 +1,6 @@
 extends Control
 
-@onready var level = preload(Autoload.level)
+@onready var level = load(Autoload.get_level())
 
 var onTitleScreen = true
 
@@ -21,7 +21,6 @@ func _on_play_button_pressed():
 
 func _process(delta):
 	if $PlaySoundPlayer.playing:
-		print(delta)
 		min_timer -= delta
 		if min_timer <= 0.0:
 			$PlaySoundPlayer.stop()

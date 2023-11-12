@@ -1,11 +1,25 @@
 extends Node
-const level = "res://Scenes/Dungeon/DungeonRoom_New.tscn"
+var level = 0
+
+const levels = ["res://Scenes/Dungeon/DungeonRoom_New.tscn",]
 const title_screen = "res://Scenes/Ui/TitleScreen.tscn"
 const CELLSIZE := 64
 
-enum CELLFILLERS {item, player, free, platform, enemy}
+enum CELLFILLERS {item, player, free, platform, goal, enemy}
 var filled_cells := {Vector2.ZERO:-1}
 
+
+func set_level(l):
+	level = l
+func next_level():
+	if level+1 < levels.size(): 
+		level += 1
+	else:
+		#TODO end screen
+		level = 0
+func get_level():
+	return levels[level]
+	
 func update_cells(pos: Vector2, value):
 	filled_cells[pos] = value
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcdjdw720uvxi"]
+[gd_scene load_steps=8 format=3 uid="uid://dcdjdw720uvxi"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_iw4r8"]
 [ext_resource type="Texture2D" uid="uid://xutxjdy0wor3" path="res://Assets/Art/character/frog.png" id="2_ihoxk"]
 [ext_resource type="Script" path="res://Scripts/Character/PlayerHealth.gd" id="3_hq0bs"]
 [ext_resource type="Script" path="res://Scripts/Character/Stats.gd" id="4_05ab4"]
 [ext_resource type="Texture2D" uid="uid://df803xu7tdyq" path="res://Assets/Art/character/frogTongue.png" id="4_k4geu"]
+[ext_resource type="AudioStream" uid="uid://bpcuk3r7yswn5" path="res://Assets/Music/SFX/Level Complete.wav" id="7_8j056"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vdxo6"]
 size = Vector2(64, 64)
@@ -41,3 +42,6 @@ centered = false
 flip_v = true
 
 [node name="PlayerSounds" type="AudioStreamPlayer2D" parent="."]
+
+[node name="NextLevelSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_8j056")
