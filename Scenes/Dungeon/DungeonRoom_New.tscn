@@ -504,8 +504,9 @@ layer_0/tile_data = PackedInt32Array(196610, 65536, 3, 262147, 0, 1, 327683, 262
 [node name="Player" parent="." instance=ExtResource("2_obs2u")]
 position = Vector2(832, 128)
 
-[node name="HUD" parent="." instance=ExtResource("3_cingh")]
-layout_mode = 1
+[node name="Camera2D2" type="Camera2D" parent="Player"]
+position = Vector2(1, 7)
+zoom = Vector2(2, 2)
 
 [node name="Enemy" parent="." instance=ExtResource("4_60bap")]
 
@@ -514,3 +515,12 @@ stream = ExtResource("5_dpsvc")
 autoplay = true
 
 [node name="Enemy2" parent="." instance=ExtResource("4_60bap")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("3_cingh")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
