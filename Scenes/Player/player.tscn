@@ -35,3 +35,5 @@ rotation = -3.17475
 texture = ExtResource("4_k4geu")
 centered = false
 flip_v = true
+
+[node name="PlayerSounds" type="AudioStreamPlayer2D" parent="."]
