@@ -2,6 +2,11 @@ extends Node2D
 
 @onready var tile_map = get_node("/root/DungeonRoom_New/TileMap")
 @onready var enemy = get_parent()
+
+const MAX_RANGE_X = 6
+const MAX_RANGE_Y = 6
+@onready var STARTING_POSITION
+
 var countdown := 0.5
 var timer
 var a_star
@@ -14,12 +19,14 @@ var path_index = 0
 var destination_id
 var track_target
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	timer = countdown
 	prepare_Tilemap_for_astar()
-	spawn_on_tilemap()
+	STARTING_POSITION = spawn_on_tilemap()
 	random_destination()
+	
 	pass # Replace with function body.
 
 
@@ -57,6 +64,8 @@ func spawn_on_tilemap():
 	current_pos_id = point_id
 	current_pos_coords = start_pos
 	Autoload.filled_cells[Vector2(current_pos_coords)] = Autoload.CELLFILLERS.enemy
+	
+	return point_id
 
 
 
@@ -103,8 +112,24 @@ func update_cells(new_cell, freed_cell):
 	Autoload.update_cells(new_cell, Autoload.CELLFILLERS.enemy)
 	Autoload.update_cells(freed_cell, Autoload.CELLFILLERS.free)
 
+
+func get_xy_distance(from_id, to_id):
+	var dx = abs(a_star_dict.get(to_id)[0] - a_star_dict.get(from_id)[0])
+	var dy = abs(a_star_dict.get(to_id)[1] - a_star_dict.get(from_id)[1])
+	return [dx, dy]
+
+
 func random_destination():
-	destination_id = randi() % a_star.get_point_count()
+	while(true):
+		destination_id = randi() % a_star.get_point_count()
+		print("TO: " + str(a_star_dict.get(destination_id)))
+		print("START " + str(STARTING_POSITION))
+		var distance = get_xy_distance(STARTING_POSITION, destination_id)
+		print(distance)
+		if distance[0] < MAX_RANGE_X and distance[1] < MAX_RANGE_Y:
+			break
+	
+	
 	path = a_star.get_point_path(current_pos_id, destination_id)
 	if(path.is_empty()):
 		random_destination()
