@@ -122,17 +122,11 @@ func get_xy_distance(from_id, to_id):
 func random_destination():
 	while(true):
 		destination_id = randi() % a_star.get_point_count()
-		print("TO: " + str(a_star_dict.get(destination_id)))
-		print("START " + str(STARTING_POSITION))
 		var distance = get_xy_distance(STARTING_POSITION, destination_id)
-		print(distance)
-		if distance[0] < MAX_RANGE_X and (distance[0] != 0 or distance[1] != 0) and distance[1] < MAX_RANGE_Y:
+		path = a_star.get_point_path(current_pos_id, destination_id)
+
+		if distance[0] < MAX_RANGE_X and path.size() > 1 and distance[1] < MAX_RANGE_Y:
 			break
-	
-	
-	path = a_star.get_point_path(current_pos_id, destination_id)
-	if(path.is_empty()):
-		random_destination()
 	
 
 func check_surroundings(range) -> bool:
