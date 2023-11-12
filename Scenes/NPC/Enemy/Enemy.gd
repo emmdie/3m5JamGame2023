@@ -34,11 +34,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-#	timer -= delta
-#	if(timer <= 0):
-#		turn()
-#		timer = countdown
-	pass
+	$DamageLabel.position += Vector2(0, -50 * delta)
 
 func turn():
 	if(current_state == STATE.attack):
@@ -102,3 +98,13 @@ func check_if_hit(pos, amount):
 
 func set_idle():
 	current_state = STATE.idle
+
+func show_damage_number(number):
+	$DamageLabel.text = str(number)
+	$DamageLabel.visible = true
+	$DamageLabel.position = Vector2(-34,-62)
+	$DamageTimer.start()
+
+
+func _on_damage_timer_timeout():
+	$DamageLabel.visible = false
