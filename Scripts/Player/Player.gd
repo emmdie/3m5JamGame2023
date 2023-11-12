@@ -2,6 +2,7 @@ extends Area2D
 
 signal player_turn
 signal attack_hit
+signal platform_boarded
 @export var bump_sound = load("res://Assets/Music/SFX/Bumping into Wall.wav")
 @export var attack_sound = load("res://Assets/Music/SFX/Zunge.wav")
 
@@ -32,6 +33,10 @@ var tongue_animation_speed =6
 var moving = false
 var prev_pos
 var attack_damage = 5
+
+var on_platform := false
+var platform_counter : int
+var platform_direction
 
 func _ready():
 	position = position.snapped(Vector2.ONE * tile_size)
@@ -66,9 +71,10 @@ func _unhandled_input(event):
 
 #moves and animates the movement
 func move(dir):
+	var destination = Autoload.filled_cells.get(prev_pos + dir)
 	walkable_ray.target_position = dir * tile_size
 	walkable_ray.force_raycast_update()
-	if walkable_ray.is_colliding() && Autoload.filled_cells.get(prev_pos + dir) != Autoload.CELLFILLERS.enemy:
+	if walkable_ray.is_colliding() && destination != null && Autoload.filled_cells.get(prev_pos + dir) <= Autoload.CELLFILLERS.enemy:
 		update_cells(dir)
 		var tween = create_tween()
 		tween.finished.connect(_on_moving_tween_finished)
@@ -79,11 +85,21 @@ func move(dir):
 		audio_player.stream = bump_sound
 		audio_player.play()
 
+func force_move(dir):
+	var destination = Autoload.filled_cells.get(prev_pos + dir)
+	if(destination != null ):
+		update_cells(dir)
+		var tween = create_tween()
+		tween.finished.connect(_on_moving_tween_finished)
+		tween.tween_property(self, "position",position + dir *    tile_size, 1.0/walking_animation_speed).set_trans(Tween.TRANS_SINE)
+		moving = true
+		emit_signal("player_turn")
+
 func jump_vertical(dir):
 	var destination = Autoload.filled_cells.get(prev_pos + dir)
 	var pos_x_start = position.x
 	var pos_x_end = position.x+dir.x-1.25 * tile_size
-	if(destination != null && destination != Autoload.CELLFILLERS.enemy):
+	if(destination != null && destination < Autoload.CELLFILLERS.enemy):
 		update_cells(dir)
 		var tween_y = create_tween()
 		var tween = create_tween()
@@ -96,7 +112,7 @@ func jump_horizontal(dir):
 	var destination = Autoload.filled_cells.get(prev_pos + dir)
 	var pos_y_start = position.y
 	var pos_y_end = position.y+dir.y-1.25 * tile_size
-	if(destination != null && destination != Autoload.CELLFILLERS.enemy):
+	if(destination != null && destination < Autoload.CELLFILLERS.enemy):
 		update_cells(dir)
 		var tween_x = create_tween()
 		var tween = create_tween()
@@ -106,6 +122,11 @@ func jump_horizontal(dir):
 
 func update_cells(direction):
 	var new_pos = prev_pos + direction
+	print("step on: ", str(Autoload.filled_cells.get(new_pos)), "coord: ", str(new_pos))
+	if(Autoload.filled_cells.get(new_pos) == Autoload.CELLFILLERS.platform):
+		on_platform = true
+		emit_signal("platform_boarded", new_pos)
+	else: if(on_platform): on_platform = false
 	Autoload.filled_cells[new_pos] = Autoload.CELLFILLERS.player
 	Autoload.filled_cells[prev_pos] = Autoload.CELLFILLERS.free
 	prev_pos = new_pos
@@ -163,3 +184,14 @@ func check_enemy_presence(direction):
 
 func take_damage(damage : int):
 	health.take_damage(damage)
+
+func _process(delta):
+	if(on_platform):
+		platform_counter -= delta
+		if(platform_counter == 0):
+			force_move(platform_direction)
+		pass
+
+func sync_with_platform(counter, direction):
+	platform_counter = counter
+	platform_direction = direction
