@@ -9,7 +9,6 @@ signal attack_hit
 @onready var tongue = $PlayerTongue
 @onready var audio_player = $PlayerSounds
 @onready var health = $Health
-@onready var stats = $Stats
 var tile_size = 64
 var jump_length := 2
 var arrow_keys = {"RIGHT": Vector2.RIGHT,
@@ -39,9 +38,6 @@ func _ready():
 	#BAD MAGIC NUMBER to know where the player starts on the tilemap
 	Autoload.filled_cells[Vector2(13,2)] = Autoload.CELLFILLERS.player
 	prev_pos = Vector2(13,2)
-
-func give_exp(EXP: int):
-	stats.raise_EXP(EXP)
 
 #checks if the player is allowed to move
 func _unhandled_input(event):
@@ -163,3 +159,6 @@ func check_enemy_presence(direction):
 
 func take_damage(damage : int):
 	health.take_damage(damage)
+
+func levelup():
+	PlayerStats.update_exp()

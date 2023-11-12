@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/Ui/hud.gd" id="1_rx5rn"]
 [ext_resource type="PackedScene" uid="uid://b8fofhyseloab" path="res://Scenes/Ui/frame.tscn" id="3_2gufx"]
 [ext_resource type="PackedScene" uid="uid://hgpl2skgfmis" path="res://Scenes/Ui/hp_bar.tscn" id="3_pt5fg"]
-[ext_resource type="PackedScene" path="res://Scenes/Ui/level_up_screen.tscn" id="3_t2onb"]
+[ext_resource type="PackedScene" uid="uid://cx1pvh5ri6ful" path="res://Scenes/Ui/level_up_screen.tscn" id="3_t2onb"]
 [ext_resource type="PackedScene" uid="uid://bg2fc7d30i5we" path="res://Scenes/Ui/game_over_screen.tscn" id="4_1wul4"]
 
 [node name="HUD" type="Control"]
@@ -17,10 +17,28 @@ script = ExtResource("1_rx5rn")
 
 [node name="GameOverScreen" parent="." instance=ExtResource("4_1wul4")]
 layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1024.0
+offset_top = 512.0
+offset_right = 1024.0
+offset_bottom = 512.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="LevelUpScreen" parent="." instance=ExtResource("3_t2onb")]
 visible = false
 layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1024.0
+offset_top = 512.0
+offset_right = 1024.0
+offset_bottom = 512.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0

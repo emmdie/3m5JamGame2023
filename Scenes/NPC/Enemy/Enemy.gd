@@ -91,8 +91,14 @@ func reset_color_modulation():
 
 func die():
 	Autoload.filled_cells[Vector2(movement.current_pos_coords)] = Autoload.CELLFILLERS.free
-	died.emit(granted_exp)
+	give_exp(granted_exp)
 	queue_free()
+
+func give_exp(amount: int):
+	PlayerStats.current_exp += amount
+	if PlayerStats.current_exp >= PlayerStats.needed_exp:
+		PlayerStats.current_exp -= PlayerStats.needed_exp
+		PlayerStats.level_up()
 
 func check_if_hit(pos, amount):
 	print("check for: ", str(pos), " on: ", str(Vector2(movement.current_pos_coords)))

@@ -17,4 +17,3 @@ func take_damage(amount : int):
 
 func die():
 	print("lol")
-	pass
